@@ -1,0 +1,34 @@
+SISTEMA DE LOCAÇÃO DE VEÍCULOS
+
+COMO RODAR (XAMPP)
+1. Ligue o Apache e o MySQL no painel do XAMPP.
+2. Copie a pasta "sistema" para C:\xampp\htdocs\
+3. No phpMyAdmin (http://localhost/phpmyadmin), use "Importar" e escolha o
+   arquivo locadora_db.sql (ele cria o banco locadora_db e os dados de exemplo).
+4. Abra http://localhost/sistema/login.php
+
+LOGINS DE TESTE
+   admin@locadora.com  / admin123
+   marina@locadora.com / marina123
+   carlos@locadora.com / carlos123
+
+ARQUIVOS
+   conexao.php        conexão com o banco, chave de criptografia e tempo da sessão
+   funcoes.php        funções de apoio (escape de texto, CPF, datas, dinheiro)
+   autenticar.php     exige login e expira a sessão após 30 min sem uso
+   login.php          tela de login (valida falha de autenticação)
+   logout.php         encerra a sessão
+   index.php          tela principal: nome do usuário, atalhos e botão Sair
+   cliente/           listar (com busca), cadastrar, editar, excluir
+   veiculo/           listar (com busca), cadastrar, editar, excluir
+   locacao/           listar (ordenada por data de retirada, com cliente e
+                      veículo), cadastrar, devolver, excluir (cancelar)
+
+PROTEÇÃO DOS DADOS
+   - Senhas dos usuários: hash bcrypt (password_hash / password_verify).
+   - CPF e CNH dos clientes: criptografados com AES no banco; o CPF aparece
+     parcialmente oculto nas telas.
+   - Todas as consultas usam comandos preparados (evita SQL injection) e todo
+     texto mostrado na tela passa por htmlspecialchars (evita XSS).
+   - Se mudar CHAVE_CRIPTO em conexao.php, troque também a chave em
+     locadora_db.sql antes de importar.
